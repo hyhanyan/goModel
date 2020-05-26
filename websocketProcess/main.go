@@ -54,6 +54,14 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 		if data, err = conn.ReadMessage(); err != nil {
 			goto ERR
 		}
+		/*
+			// 一对一发送
+			if err = conn.WriteMessage(data); err != nil {
+				goto ERR
+			}
+		*/
+
+		// 广播
 		connMap := impl.GetConnPool()
 		fmt.Println(impl.GetLengthConnPool())
 		for _, ws := range connMap {
